@@ -16,7 +16,7 @@ body, html {
     animation: gradientShift 15s ease infinite;
     color: #35221b;
     overflow-x: hidden;
-    cursor: none;
+    cursor: auto;
 }
 
 .cursor {
