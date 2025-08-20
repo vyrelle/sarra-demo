@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SARRA</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(219, 218, 216, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 25px;
+            padding: 2px;
+            background: linear-gradient(45deg, #d0bca3, #8f6451, #35221b, #eab91, #dbdad8, #d0bca3);
+            background-size: 400% 400%;
+            animation: borderGlow 3s ease-in-out infinite;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: exclude;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+        
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #35221b;
+            text-align: justify;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(143, 100, 81, 0.8);
+            color: #dbdad8;
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            background: rgba(143, 100, 81, 1);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <div class="container">
+        <header class="hero">
+            <h1 class="name">SARRA</h1>
+            <p class="tagline">Feedback-Driven LLM Adaptation</p>
+        </header>
+        
+        <main class="about-content">
+            <p class="about-text">
+                We propose a feedback-driven improvement loop for retrieval-augmented generation (RAG)-based chatbots. This framework enables the chatbot to learn and evolve by integrating real-time user corrections and feedback. By incorporating user input, the chatbot can enhance its accuracy and relevance, leading to better understanding of user intent and improved interactions over time.
+            </p>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
