@@ -78,7 +78,7 @@
             <p class="about-text">
                 We propose a feedback-driven improvement loop for retrieval-augmented generation (RAG)-based chatbots. This framework enables the chatbot to learn and evolve by integrating real-time user corrections and feedback. By incorporating user input, the chatbot can enhance its accuracy and relevance, leading to better understanding of user intent and improved interactions over time.
             </p>
-            <button onclick="window.location.href='index.html'" class="back-btn" style="border: none; cursor: pointer; pointer-events: auto; z-index: 9999;">← Back to Home</button>
+            <button onclick="window.location.href='/'" class="back-btn" style="border: none; cursor: pointer; pointer-events: auto; z-index: 9999;">← Back to Home</button>
         </main>
     </div>
     
