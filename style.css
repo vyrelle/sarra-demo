@@ -16,7 +16,7 @@ body, html {
     animation: gradientShift 15s ease infinite;
     color: #35221b;
     overflow-x: hidden;
-    cursor: auto;
+    cursor: none;
 }
 
 .cursor {
@@ -133,6 +133,14 @@ body, html {
         0 30px 60px rgba(53, 34, 27, 0.4),
         0 0 100px rgba(208, 188, 163, 0.2),
         0 0 150px rgba(143, 100, 81, 0.1);
+}
+
+.card[onclick] {
+    cursor: none !important;
+}
+
+button {
+    cursor: none !important;
 }
 
 .card h2 {
