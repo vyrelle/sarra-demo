@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     animateFollower();
 
-    document.querySelectorAll('.card').forEach(card => {
+    document.querySelectorAll('.card, .about-content').forEach(card => {
         card.addEventListener('mouseenter', () => {
             cursor.style.transform = 'scale(1.5)';
             cursorFollower.style.transform = 'scale(2)';
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.querySelectorAll('.card, .hero').forEach(el => {
+    document.querySelectorAll('.card, .hero, .about-content').forEach(el => {
         observer.observe(el);
     });
 
