@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarra</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarra</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
-    
-    <div class="container">
-        <header class="hero">
-            <h1 class="name">SARRA</h1>
-            <p class="tagline">Feedback-Driven LLM Adaptation</p>
-        </header>
-        
-        <main class="content">
-            <div class="card" onclick="location.href='about.html'" style="cursor: pointer;">
-                <h2>About</h2>
-                <p>AI adaptation through feedback</p>
-            </div>
-            
-            <div class="card">
-                <h2>Contact</h2>
-                <p>Ready to collaborate</p>
-            </div>
-        </main>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+  
+  <div class="container">
+    <header class="hero">
+      <h1 class="name">SARRA</h1>
+      <p class="tagline">Feedback-Driven LLM Adaptation</p>
+    </header>
+
+    <div class="content">
+        <div class="ask-box">
+            <input id="askInput" class="ask-input" type="text" placeholder="Задайте вопрос..." aria-label="Задать вопрос">
+            <button id="askBtn" class="ask-btn" onclick="location.href='chat.html'">⭡</button>
+        </div>
     </div>
-    
-    <script src="script.js"></script>
+
+    <main class="content">
+      <div class="card" onclick="location.href='about.html'" style="cursor: pointer;">
+        <h2>About</h2>
+        <p>AI adaptation through feedback</p>
+      </div>
+
+      <div class="card">
+        <h2>Contact</h2>
+        <p>Ready to collaborate</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
