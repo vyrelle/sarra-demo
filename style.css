@@ -248,7 +248,7 @@ button {
     flex: 1;
     min-width: 320px;
     max-width: 700px;
-    margin: 0 auto 2rem;   /* центрируем и оставляем отступ снизу */
+    margin: 0 auto 2rem;   
     gap: 8px;
 }
 
@@ -269,7 +269,6 @@ button {
     box-shadow: 0 4px 10px rgba(143, 100, 81, 0.4);
 }
 
-/* Круглая кнопка со стрелкой */
 .ask-btn {
     width: 45px;
     height: 45px;

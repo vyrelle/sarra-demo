@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     animateFollower();
 
-    // Элементы, на которые должна срабатывать анимация
     document.querySelectorAll('.card, .about-content, .ask-input, .ask-btn').forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursor.style.transform = 'scale(1.5)';
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // IntersectionObserver для плавных анимаций появления
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -43,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // Видимость курсора
     document.addEventListener('mouseenter', () => {
         cursor.style.opacity = '1';
         cursorFollower.style.opacity = '1';
@@ -53,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cursorFollower.style.opacity = '0';
     });
 
-    // 👉 По умолчанию активируем ask-input
     const askInput = document.querySelector('.ask-input');
     if (askInput) {
         askInput.focus();
@@ -61,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cursorFollower.style.transform = 'scale(2)';
     }
 
-    // Кнопка отправки
     const askBtn = document.querySelector('.ask-btn');
     if (askBtn) {
         askBtn.addEventListener('click', () => {
@@ -71,21 +66,5 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    const sidebar = document.getElementById('sidebar');
-    const toggleSidebarBtn = document.getElementById('toggleSidebar');
-    const sidebarIcon = document.getElementById('sidebarIcon');
-
-    let sidebarOpen = true;
-
-    toggleSidebarBtn.addEventListener('click', () => {
-    if (sidebarOpen) {
-        sidebar.classList.add('-translate-x-full'); // закрыть
-        sidebarOpen = false;
-    } else {
-        sidebar.classList.remove('-translate-x-full'); // открыть
-        sidebarOpen = true;
-    }
-    });
-
 });
 
