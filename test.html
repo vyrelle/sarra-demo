@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARRA Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-content { max-width: 600px; margin: 0 auto; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="test-content">
+        <h1 data-i18n="title">SARRA</h1>
+        <p data-i18n="tagline">Feedback-Driven LLM Adaptation</p>
+        
+        <div class="test-section">
+            <h2>Test Content</h2>
+            <p data-i18n="welcome_message">Welcome to SARRA!</p>
+            <p data-i18n="about_description">AI adaptation through feedback</p>
+            <input type="text" data-i18n-placeholder="ask_placeholder" placeholder="Ask a question...">
+        </div>
+        
+        <div class="test-section">
+            <p>Current language: <span id="current-lang"></span></p>
+            <button onclick="testTranslation()">Test Translation Function</button>
+        </div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script>
+        function testTranslation() {
+            console.log('English title:', i18n.translations.en.title);
+            console.log('Kazakh title:', i18n.translations.kk.title);
+            console.log('Russian title:', i18n.translations.ru.title);
+            console.log('Current lang:', i18n.getCurrentLang());
+            console.log('Translated title:', i18n.t('title'));
+        }
+        
+        function updateCurrentLang() {
+            document.getElementById('current-lang').textContent = i18n.getCurrentLang();
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            i18n.init();
+            updateCurrentLang();
+            
+            // Add click listeners to language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTimeout(updateCurrentLang, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

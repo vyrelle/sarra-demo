@@ -59,10 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const askBtn = document.querySelector('.ask-btn');
     if (askBtn) {
-        askBtn.addEventListener('click', () => {
+        askBtn.addEventListener('click', (e) => {
             if (askInput && askInput.value.trim() !== "") {
-                alert("You asked: " + askInput.value);
-                askInput.value = "";
+                // Only show alert if not redirecting to chat.html
+                if (!askBtn.onclick) {
+                    alert("You asked: " + askInput.value);
+                    askInput.value = "";
+                }
             }
         });
     }

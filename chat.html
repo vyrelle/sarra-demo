@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SARRA</title>
+  <title data-i18n="title">SARRA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     .sidebar-transition {
@@ -94,7 +94,7 @@
   <div id="sidebar" class="fixed left-0 top-0 h-full w-80 bg-[rgba(230,220,200,0.9)] text-[#35221b] z-50 sidebar-transition transform -translate-x-full">
     <div class="flex flex-col h-full">
       <div class="flex items-center justify-between p-4 border-b border-[#b9a892]">
-        <a href="index.html" class="text-xl font-bold tracking-widest font-[system-ui] text-[#35221b]">SARRA</a>
+        <a href="index.html" class="text-xl font-bold tracking-widest font-[system-ui] text-[#35221b]" data-i18n="title">SARRA</a>
         <button id="closeSidebar" class="p-2 hover:bg-[#d0bca3] rounded">
           <svg class="w-5 h-5 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -107,13 +107,13 @@
           <svg class="w-5 h-5 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
           </svg>
-          <span>Новый чат</span>
+          <span data-i18n="new_chat">New Chat</span>
         </button>
       </div>
       
       <div class="px-4 pb-4">
         <div class="relative">
-          <input type="text" id="searchInput" placeholder="Поиск чатов..." class="w-full bg-white text-[#35221b] placeholder-[#8f6451] rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-[#8f6451]">
+          <input type="text" id="searchInput" data-i18n-placeholder="search_chats" placeholder="Search chats..." class="w-full bg-white text-[#35221b] placeholder-[#8f6451] rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-[#8f6451]">
           <svg class="w-4 h-4 absolute left-3 top-3 text-[#8f6451]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
@@ -122,7 +122,7 @@
       
       <div class="flex-1 overflow-y-auto">
         <div class="px-4 pb-2">
-          <h3 class="text-lg font-medium text-[#8f6451] mb-3">История</h3>
+          <h3 class="text-lg font-medium text-[#8f6451] mb-3" data-i18n="history">History</h3>
         </div>
         <div id="chatHistory" class="px-4 space-y-2">
         </div>
@@ -133,7 +133,7 @@
           <div class="w-8 h-8 bg-[#8f6451] rounded-full flex items-center justify-center">
             <span class="text-sm font-medium text-white">У</span>
           </div>
-          <span class="text-sm">Пользователь</span>
+          <span class="text-sm" data-i18n="user">User</span>
         </div>
       </div>
     </div>
@@ -147,7 +147,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-        <h2 class="text-xl font-semibold text-[#35221b]">SARRA Assistant</h2>
+        <h2 class="text-xl font-semibold text-[#35221b]" data-i18n="sarra_assistant">SARRA Assistant</h2>
       </div>
     </header>
     
@@ -155,12 +155,14 @@
       <div id="welcomeScreen" class="flex-1 flex items-center justify-center p-8">
         <div class="text-center">
           <h3 class="text-2xl font-bold text-[#35221b] mb-2"
-              style="text-shadow: 3px 3px 15px rgba(189, 157, 127, 0.6);">
-            Добро пожаловать в SARRA!
+              style="text-shadow: 3px 3px 15px rgba(189, 157, 127, 0.6);"
+              data-i18n="welcome_message">
+            Welcome to SARRA!
           </h3>
           <p class="text-[#8f6451] mb-8"
-            style="text-shadow: 2px 2px 10px rgba(189, 157, 127, 0.4);">
-            Я готов помочь вам с любыми вопросами. Начните новый разговор ниже.
+            style="text-shadow: 2px 2px 10px rgba(189, 157, 127, 0.4);"
+            data-i18n="welcome_description">
+            I'm ready to help you with any questions. Start a new conversation below.
           </p>
         </div>
       </div>
@@ -173,7 +175,8 @@
           <div class="relative">
             <textarea 
               id="messageInput"
-              placeholder="Напишите ваш вопрос..." 
+              data-i18n-placeholder="message_placeholder"
+              placeholder="Write your question..." 
               class="w-full resize-none border border-[#b9a892] rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-[#8f6451] focus:border-transparent"
               rows="1"
             ></textarea>
@@ -183,15 +186,15 @@
               </svg>
             </button>
           </div>
-          <div class="text-xs text-[#8f6451] mt-2 text-center">
-            SARRA может делать ошибки. Проверяйте важную информацию.
+          <div class="text-xs text-[#8f6451] mt-2 text-center" data-i18n="disclaimer">
+            SARRA can make mistakes. Check important information.
           </div>
         </div>
       </div>
 
       <div id="ratingBlock" class="modal hidden p-6">
         <div class="flex justify-between items-center mb-4">
-          <h4 class="text-lg font-semibold text-[#35221b]">Оценить ответ</h4>
+          <h4 class="text-lg font-semibold text-[#35221b]" data-i18n="rate_answer">Rate Answer</h4>
           <button id="closeRatingModal" class="p-2 hover:bg-[#d0bca3] rounded">
             <svg class="w-5 h-5 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -200,7 +203,7 @@
         </div>
         
         <div class="mb-4">
-          <label class="block text-sm font-medium text-[#35221b] mb-2">Рейтинг:</label>
+          <label class="block text-sm font-medium text-[#35221b] mb-2" data-i18n="rating">Rating:</label>
           <div class="flex gap-1" id="starRating">
             <span class="star text-2xl text-gray-300" data-rating="1">★</span>
             <span class="star text-2xl text-gray-300" data-rating="2">★</span>
@@ -211,7 +214,7 @@
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-[#35221b] mb-2">Ваш отзыв</label>
+          <label class="block text-sm font-medium text-[#35221b] mb-2" data-i18n="your_feedback">Your feedback</label>
           <textarea 
             id="commentInput" 
             class="w-full border border-[#b9a892] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8f6451]"
@@ -219,8 +222,8 @@
           ></textarea>
         </div>
 
-        <button id="submitFeedback" class="bg-[#8f6451] text-white px-6 py-2 rounded-lg hover:bg-[#35221b] transition-colors">
-          Отправить
+        <button id="submitFeedback" class="bg-[#8f6451] text-white px-6 py-2 rounded-lg hover:bg-[#35221b] transition-colors" data-i18n="submit">
+          Submit
         </button>
       </div>
 
@@ -228,6 +231,7 @@
     </div>
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     let currentChatId = null;
     let chats = JSON.parse(localStorage.getItem('sarraChats') || '[]');
@@ -330,7 +334,7 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
           </svg>
-          <span>Оценить ответ</span>
+          <span>${i18n.t('rate_answer')}</span>
         </button>
       `;
       chatMessages.appendChild(rateDiv);
@@ -346,7 +350,7 @@
       loaderDiv.innerHTML = `
         <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-[#b9a892] flex items-center gap-2">
           <div class="loader"></div>
-          <span class="text-[#35221b]">Генерируется ответ...</span>
+          <span class="text-[#35221b]">${i18n.t('generating_response')}</span>
         </div>
       `;
       chatMessages.appendChild(loaderDiv);
@@ -405,12 +409,12 @@
       const comment = document.getElementById('commentInput').value.trim();
       
       if (!comment) {
-        alert('Пожалуйста, оставьте отзыв');
+        alert(i18n.t('please_leave_feedback'));
         return;
       }
 
       if (currentRating === 0) {
-        alert('Пожалуйста, поставьте оценку');
+        alert(i18n.t('please_rate'));
         return;
       }
 
@@ -428,23 +432,17 @@
         resultDiv.innerHTML = `
           <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-[#b9a892] flex items-center gap-2 text-green-600">
             <span class="text-2xl">🟢</span>
-            <span class="font-medium">Принято (валидация пройдена)</span>
+            <span class="font-medium">${i18n.t('accepted_validation')}</span>
           </div>
         `;
       } else {
-        const reasons = [
-          'Фидбэк содержит ненормативную лексику',
-          'Отзыв слишком короткий',
-          'Обнаружен спам-контент',
-          'Требуется более детальная обратная связь'
-        ];
-        const reason = reasons[Math.floor(Math.random() * reasons.length)];
+        const reason = i18n.getRandomValidationReason();
         
         resultDiv.innerHTML = `
           <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-[#b9a892] text-red-600">
             <div class="flex items-center gap-2 mb-2">
               <span class="text-2xl">🔴</span>
-              <span class="font-medium">Отклонено (валидация не пройдена)</span>
+              <span class="font-medium">${i18n.t('rejected_validation')}</span>
             </div>
             <div class="text-sm ml-8">${reason}</div>
           </div>
@@ -532,7 +530,7 @@
       const chat = chats.find(c => c.id === chatId);
       if (!chat) return;
 
-      const isConfirmed = confirm(`Вы уверены, что хотите удалить чат "${chat.title}"?`);
+      const isConfirmed = confirm(`${i18n.t('delete_chat_confirm')} "${chat.title}"?`);
       if (!isConfirmed) return;
 
       const chatElements = document.querySelectorAll('.chat-item');
@@ -593,6 +591,12 @@
 
     window.loadChat = loadChat;
     window.deleteChat = deleteChat;
+
+    // Initialize i18n and update chat history
+    document.addEventListener('DOMContentLoaded', () => {
+      i18n.init();
+      updateChatHistory();
+    });
 
     updateChatHistory();
   </script>

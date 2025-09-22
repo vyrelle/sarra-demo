@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sarra</title>
+  <title data-i18n="title">SARRA</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,30 +12,36 @@
   
   <div class="container">
     <header class="hero">
-      <h1 class="name">SARRA</h1>
-      <p class="tagline">Feedback-Driven LLM Adaptation</p>
+      <h1 class="name" data-i18n="title">SARRA</h1>
+      <p class="tagline" data-i18n="tagline">Feedback-Driven LLM Adaptation</p>
     </header>
 
     <div class="content">
         <div class="ask-box">
-            <input id="askInput" class="ask-input" type="text" placeholder="Задайте вопрос..." aria-label="Задать вопрос">
+            <input id="askInput" class="ask-input" type="text" data-i18n-placeholder="ask_placeholder" placeholder="Ask a question..." aria-label="Ask a question">
             <button id="askBtn" class="ask-btn" onclick="location.href='chat.html'">⭡</button>
         </div>
     </div>
 
     <main class="content">
       <div class="card" onclick="location.href='about.html'" style="cursor: pointer;">
-        <h2>About</h2>
-        <p>AI adaptation through feedback</p>
+        <h2 data-i18n="about">About</h2>
+        <p data-i18n="about_description">AI adaptation through feedback</p>
       </div>
 
       <div class="card">
-        <h2>Contact</h2>
-        <p>Ready to collaborate</p>
+        <h2 data-i18n="contact">Contact</h2>
+        <p data-i18n="contact_description">Ready to collaborate</p>
       </div>
     </main>
   </div>
 
+  <script src="i18n.js"></script>
   <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      i18n.init();
+    });
+  </script>
 </body>
 </html>
