@@ -44,7 +44,10 @@ class I18n {
                 'validation_profanity': 'Feedback contains profanity',
                 'validation_too_short': 'Feedback too short',
                 'validation_spam': 'Spam content detected',
-                'validation_more_detail': 'More detailed feedback required'
+                'validation_more_detail': 'More detailed feedback required',
+                
+                // Bot response
+                'bot_response_documents': 'For this, you will need to provide the necessary documents in person at JSC "Government for Citizens" or a territorial subdivision of the Ministry of Internal Affairs of the Republic of Kazakhstan. The service is available both in regular and expedited procedures, depending on the situation.'
             },
             kk: {
                 // Common
@@ -87,7 +90,10 @@ class I18n {
                 'validation_profanity': 'Кері байланыста дөрекі сөздер бар',
                 'validation_too_short': 'Кері байланыс тым қысқа',
                 'validation_spam': 'Спам мазмұн анықталды',
-                'validation_more_detail': 'Көбірек толық кері байланыс қажет'
+                'validation_more_detail': 'Көбірек толық кері байланыс қажет',
+                
+                // Bot response
+                'bot_response_documents': 'Ол үшін сізге қажетті құжаттарды "Азаматтарға арналған үкімет" МКК немесе ҚР ІІМ-нің аумақтық бөлімшесіне дербес ұсыну қажет болады. Қызмет жағдайға байланысты қалыпты және жеделдетілген тәртіпте қол жетімді.'
             },
             ru: {
                 // Common
@@ -130,7 +136,10 @@ class I18n {
                 'validation_profanity': 'Фидбэк содержит ненормативную лексику',
                 'validation_too_short': 'Отзыв слишком короткий',
                 'validation_spam': 'Обнаружен спам-контент',
-                'validation_more_detail': 'Требуется более детальная обратная связь'
+                'validation_more_detail': 'Требуется более детальная обратная связь',
+                
+                // Bot response
+                'bot_response_documents': 'Для этого потребуется предоставить необходимые документы лично в НАО «Государственная корпорация «Правительство для граждан» или территориальное подразделение МВД РК. Услуга доступна как в обычном, так и в ускоренном порядке, в зависимости от ситуации.'
             }
         };
         

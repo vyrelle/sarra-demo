@@ -363,10 +363,8 @@
     }
 
     function generateBotResponse(question) {
-      const responses = [
-        'Для этого потребуется предоставить необходимые документы лично в НАО «Государственная корпорация «Правительство для граждан» или территориальное подразделение МВД РК. Услуга доступна как в обычном, так и в ускоренном порядке, в зависимости от ситуации. '
-      ];
-      return responses[Math.floor(Math.random() * responses.length)];
+      // Return translated response based on current language
+      return i18n.t('bot_response_documents');
     }
 
     function showRatingBlock() {
