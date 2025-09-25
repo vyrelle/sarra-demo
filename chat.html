@@ -21,12 +21,13 @@
     }
     .loader {
       border: 2px solid #f3f3f3;
-      border-top: 2px solid #8f6451;
+      border-top: 2px solid #4b5563; 
       border-radius: 50%;
       width: 20px;
       height: 20px;
       animation: spin 1s linear infinite;
     }
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -36,10 +37,10 @@
       transition: color 0.2s ease;
     }
     .star:hover {
-      color: #ffd700;
+      color: #f7bc0d;
     }
     .star.active {
-      color: #ffd700;
+      color: #f7bc0d;
     }
     .chat-item {
       transition: all 0.3s ease;
@@ -56,13 +57,14 @@
       opacity: 1;
     }
     .rate-button {
-      background-color: rgba(143,100,81,0.1);
-      color: #8f6451;
+      background-color: rgba(75, 85, 99, 0.1); 
+      color: #374151; 
       font-size: 0.875rem;
     }
     .rate-button:hover {
-      background-color: rgba(143,100,81,0.2);
+      background-color: rgba(75, 85, 99, 0.2);
     }
+
     .modal {
       position: fixed;
       top: 50%;
@@ -88,138 +90,175 @@
     }
   </style>
 </head>
-<body class="bg-[#fdfcf9] font-sans">
-  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden overlay"></div>
+<body class="bg-white font-sans">
 
-  <div id="sidebar" class="fixed left-0 top-0 h-full w-80 bg-[rgba(230,220,200,0.9)] text-[#35221b] z-50 sidebar-transition transform -translate-x-full">
+  <div id="sidebar" class="fixed left-0 top-0 h-full w-80 bg-gray-900 text-white z-50 sidebar-transition transform -translate-x-full border-r border-gray-700">
     <div class="flex flex-col h-full">
-      <div class="flex items-center justify-between p-4 border-b border-[#b9a892]">
-        <a href="index.html" class="text-xl font-bold tracking-widest font-[system-ui] text-[#35221b]">SARRA</a>
-        <button id="closeSidebar" class="p-2 hover:bg-[#d0bca3] rounded">
-          <svg class="w-5 h-5 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center justify-between p-4 border-b border-gray-700">
+        <a href="index.html" class="text-xl font-bold tracking-widest text-white">SARRA</a>
+        <button id="closeSidebar" class="p-2 hover:bg-gray-800 rounded">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
       
       <div class="p-4">
-        <button id="newChatBtn" class="w-full flex items-center gap-3 p-3 bg-[rgba(143,100,81,0.15)] hover:bg-[rgba(143,100,81,0.3)] rounded-lg transition-colors text-[#35221b]">
-          <svg class="w-5 h-5 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button id="newChatBtn" class="w-full flex items-center gap-3 p-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors text-white">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
           </svg>
           <span>Новый чат</span>
         </button>
       </div>
       
-      <div class="px-4 pb-4">
+      <div class="px-4 pb-4" id="searchSection">
         <div class="relative">
-          <input type="text" id="searchInput" placeholder="Поиск чатов..." class="w-full bg-white text-[#35221b] placeholder-[#8f6451] rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-[#8f6451]">
-          <svg class="w-4 h-4 absolute left-3 top-3 text-[#8f6451]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <input type="text" id="searchInput" placeholder="Поиск чатов..." class="w-full bg-gray-800 text-white placeholder-gray-400 rounded-lg px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-indigo-600 border border-gray-700">
+          <svg class="w-4 h-4 absolute left-3 top-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
           </svg>
         </div>
       </div>
       
-      <div class="flex-1 overflow-y-auto">
+      <div class="flex-1 overflow-y-auto" id="historySection">
         <div class="px-4 pb-2">
-          <h3 class="text-lg font-medium text-[#8f6451] mb-3">История</h3>
+          <h3 class="text-lg font-medium text-white mb-3">История</h3>
         </div>
         <div id="chatHistory" class="px-4 space-y-2">
         </div>
       </div>
+
+      <div id="guestMessage" class="p-4 border-t border-gray-700 hidden">
+        <div class="text-center text-sm text-gray-400 mb-3">
+          <p class="mb-2">Войдите, чтобы сохранять историю чатов</p>
+          <button id="sidebarLoginBtn" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+            Войти
+          </button>
+        </div>
+      </div>
       
-      <div class="p-4 border-t border-[#b9a892]">
+      <div class="p-4 border-t border-gray-700" id="userInfo">
         <div class="flex items-center gap-3">
-          <div class="w-8 h-8 bg-[#8f6451] rounded-full flex items-center justify-center">
-            <span class="text-sm font-medium text-white">У</span>
+          <div class="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
+            <span class="text-sm font-medium text-white" id="userInitial">Г</span>
           </div>
-          <span class="text-sm">Пользователь</span>
+          <div class="flex-1 min-w-0">
+            <span class="text-sm text-gray-300" id="userEmail">Гость</span>
+          </div>
+          <button id="logoutBtn" class="p-1 text-gray-400 hover:text-white transition-colors hidden" title="Выйти">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="mainContent" class="min-h-screen flex flex-col transition-all duration-300">
-    <header class="bg-white border-b border-[#b9a892] p-4 flex items-center justify-between">
+  <div id="mainContent" class="min-h-screen flex flex-col transition-all duration-300 ml-0">
+    <header class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <button id="openSidebar" class="p-2 hover:bg-[#d0bca3] rounded">
-          <svg class="w-6 h-6 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <button id="openSidebar" class="p-2 hover:bg-blue-100 rounded">
+          <svg class="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-        <h2 class="text-xl font-semibold text-[#35221b]">SARRA Assistant</h2>
+        <h2 class="text-xl font-bold tracking-widest text-gray-700">SARRA Assistant</h2>
+      </div>
+      
+      <div id="headerLoginSection" class="flex items-center gap-2">
+        <button id="headerLoginBtn" class="bg-gray-700 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+          Войти
+        </button>
+      </div>
+
+      <div id="headerUserSection" class="hidden flex items-center gap-2">
+        <span class="text-sm text-gray-600" id="headerUserEmail">user@email.com</span>
+        <button id="headerLogoutBtn" class="text-gray-600 hover:text-gray-800 transition-colors" title="Выйти">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"></path>
+          </svg>
+        </button>
       </div>
     </header>
     
     <div class="flex-1 flex flex-col max-w-4xl mx-auto w-full">
-      <div id="welcomeScreen" class="flex-1 flex items-center justify-center p-8">
-        <div class="text-center">
-          <h3 class="text-2xl font-bold text-[#35221b] mb-2"
-              style="text-shadow: 3px 3px 15px rgba(189, 157, 127, 0.6);">
-            Добро пожаловать в SARRA!
-          </h3>
-          <p class="text-[#8f6451] mb-8"
-            style="text-shadow: 2px 2px 10px rgba(189, 157, 127, 0.4);">
-            Я готов помочь вам с любыми вопросами. Начните новый разговор ниже.
-          </p>
-        </div>
-      </div>
+      <div id="welcomeScreen" class="flex-1 flex flex-col justify-center items-center p-8 relative">
+        <div class="flex flex-col items-center" style="transform: translateY(-60px); width: 100%;">
+          <div class="text-center mb-4">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">
+              Добро пожаловать в 
+              <span class="text-xl font-bold tracking-widest text-gray-800">SARRA</span>!
+            </h3>
+          </div>
 
-      <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 hidden">
-      </div>
-
-      <div id="questionBlock" class="p-4 border-t border-[#b9a892] bg-white">
-        <div class="max-w-4xl mx-auto">
-          <div class="relative">
+          <div class="w-full max-w-2xl relative">
             <textarea 
-              id="messageInput"
-              placeholder="Напишите ваш вопрос..." 
-              class="w-full resize-none border border-[#b9a892] rounded-lg px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-[#8f6451] focus:border-transparent"
+              id="messageInput" 
+              placeholder="Задайте вопрос..." 
+              class="w-full border rounded-full py-3 px-4 pr-12 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               rows="1"
             ></textarea>
-            <button id="sendButton" class="absolute right-2 top-2 p-2 bg-[#8f6451] text-white rounded-lg hover:bg-[#35221b] transition-colors disabled:bg-gray-300">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
-              </svg>
+
+            <button id="sendButton" 
+              class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors">
+              ⭡
             </button>
-          </div>
-          <div class="text-xs text-[#8f6451] mt-2 text-center">
-            SARRA может делать ошибки. Проверяйте важную информацию.
           </div>
         </div>
       </div>
 
-      <div id="ratingBlock" class="modal hidden p-6">
+      <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 hidden"></div>
+      <div id="questionBlock" class="p-4 bg-white pb-8 hidden">
+        <div class="max-w-4xl mx-auto">
+          <div class="relative w-full flex justify-center">
+            <textarea 
+              id="chatInput" 
+              placeholder="Задайте вопрос..." 
+              class="w-full max-w-2xl border rounded-full py-3 px-4 pr-12 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              rows="1"
+            ></textarea>
+
+            <button id="chatSendButton" 
+              class="absolute right-[calc(50%-320px)] top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors disabled:bg-gray-400">
+              ⭡
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="ratingBlock" class="modal hidden p-6 bg-white rounded-lg shadow-lg">
         <div class="flex justify-between items-center mb-4">
-          <h4 class="text-lg font-semibold text-[#35221b]">Оценить ответ</h4>
-          <button id="closeRatingModal" class="p-2 hover:bg-[#d0bca3] rounded">
-            <svg class="w-5 h-5 text-[#35221b]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <h4 class="text-lg font-semibold text-gray-800">Оценить ответ</h4>
+          <button id="closeRatingModal" class="p-2 hover:bg-gray-200 rounded">
+            <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
         
         <div class="mb-4">
-          <label class="block text-sm font-medium text-[#35221b] mb-2">Рейтинг:</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Рейтинг:</label>
           <div class="flex gap-1" id="starRating">
-            <span class="star text-2xl text-gray-300" data-rating="1">★</span>
-            <span class="star text-2xl text-gray-300" data-rating="2">★</span>
-            <span class="star text-2xl text-gray-300" data-rating="3">★</span>
-            <span class="star text-2xl text-gray-300" data-rating="4">★</span>
-            <span class="star text-2xl text-gray-300" data-rating="5">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="1">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="2">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="3">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="4">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="5">★</span>
           </div>
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium text-[#35221b] mb-2">Ваш отзыв</label>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Ваш отзыв</label>
           <textarea 
             id="commentInput" 
-            class="w-full border border-[#b9a892] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8f6451]"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
             rows="3"
           ></textarea>
         </div>
 
-        <button id="submitFeedback" class="bg-[#8f6451] text-white px-6 py-2 rounded-lg hover:bg-[#35221b] transition-colors">
+        <button id="submitFeedback" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
           Отправить
         </button>
       </div>
@@ -230,48 +269,154 @@
 
   <script>
     let currentChatId = null;
-    let chats = JSON.parse(localStorage.getItem('sarraChats') || '[]');
+    let chats = [];
     let currentRating = 0;
+    let isLoggedIn = false;
+    let currentUser = '';
 
     const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
     const openSidebarBtn = document.getElementById('openSidebar');
     const closeSidebarBtn = document.getElementById('closeSidebar');
     const messageInput = document.getElementById('messageInput');
+    const chatInput = document.getElementById('chatInput');
     const sendButton = document.getElementById('sendButton');
+    const chatSendButton = document.getElementById('chatSendButton');
     const welcomeScreen = document.getElementById('welcomeScreen');
     const chatMessages = document.getElementById('chatMessages');
     const questionBlock = document.getElementById('questionBlock');
     const ratingBlock = document.getElementById('ratingBlock');
     const modalOverlay = document.getElementById('modalOverlay');
     const closeRatingModal = document.getElementById('closeRatingModal');
+    const newChatBtn = document.getElementById('newChatBtn');
+    const searchInput = document.getElementById('searchInput');
+    const chatHistory = document.getElementById('chatHistory');
+
+    const headerLoginBtn = document.getElementById('headerLoginBtn');
+    const headerUserSection = document.getElementById('headerUserSection');
+    const headerLoginSection = document.getElementById('headerLoginSection');
+    const headerUserEmail = document.getElementById('headerUserEmail');
+    const headerLogoutBtn = document.getElementById('headerLogoutBtn');
+    const sidebarLoginBtn = document.getElementById('sidebarLoginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const userEmail = document.getElementById('userEmail');
+    const userInitial = document.getElementById('userInitial');
+    const userInfo = document.getElementById('userInfo');
+    const guestMessage = document.getElementById('guestMessage');
+    const searchSection = document.getElementById('searchSection');
+    const historySection = document.getElementById('historySection');
+
+    function checkAuthStatus() {
+      const user = localStorage.getItem('chat_user');
+      if (user) {
+        isLoggedIn = true;
+        currentUser = user;
+        loadUserChats();
+        updateUIForLoggedInUser();
+      } else {
+        isLoggedIn = false;
+        currentUser = '';
+        chats = [];
+        updateUIForGuestUser();
+      }
+    }
+
+    function updateUIForLoggedInUser() {
+      headerLoginSection.classList.add('hidden');
+      headerUserSection.classList.remove('hidden');
+      headerUserEmail.textContent = currentUser;
+      
+      guestMessage.classList.add('hidden');
+      userInfo.classList.remove('hidden');
+      searchSection.classList.remove('hidden');
+      historySection.classList.remove('hidden');
+      
+      userEmail.textContent = currentUser;
+      userInitial.textContent = currentUser.charAt(0).toUpperCase();
+      logoutBtn.classList.remove('hidden');
+      
+      updateChatHistory();
+    }
+
+    function updateUIForGuestUser() {
+      headerLoginSection.classList.remove('hidden');
+      headerUserSection.classList.add('hidden');
+      
+      userInfo.classList.add('hidden');
+      guestMessage.classList.remove('hidden');
+      searchSection.classList.add('hidden');
+      historySection.classList.add('hidden');
+      
+      chatHistory.innerHTML = '';
+    }
+
+    function loadUserChats() {
+      if (isLoggedIn) {
+        chats = JSON.parse(localStorage.getItem(`sarraChats_${currentUser}`) || '[]');
+      }
+    }
+
+    function saveChats() {
+      if (isLoggedIn) {
+        localStorage.setItem(`sarraChats_${currentUser}`, JSON.stringify(chats));
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('chat_user');
+      isLoggedIn = false;
+      currentUser = '';
+      chats = [];
+      currentChatId = null;
+      
+      updateUIForGuestUser();
+      startNewChat();
+    }
+
+    function redirectToAuth() {
+      window.location.href = 'auth.html';
+    }
 
     function openSidebar() {
       sidebar.classList.remove('-translate-x-full');
-      overlay.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
+      document.getElementById('mainContent').style.marginLeft = '320px';
+      document.getElementById('openSidebar').style.display = 'none';
     }
 
     function closeSidebar() {
       sidebar.classList.add('-translate-x-full');
-      overlay.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
+      document.getElementById('mainContent').style.marginLeft = '0px';
+      document.getElementById('openSidebar').style.display = 'block';
     }
 
-    openSidebarBtn.addEventListener('click', openSidebar);
-    closeSidebarBtn.addEventListener('click', closeSidebar);
-    overlay.addEventListener('click', closeSidebar);
-
-    messageInput.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+    messageInput.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendButton.click();
+      }
     });
 
-    messageInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && !e.shiftKey) {
+    chatInput.addEventListener('keydown', function(e) {
+      if(e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
-        sendMessage();
+        chatSendButton.click();
       }
+    });
+
+    sendButton.addEventListener('click', sendMessage);
+
+    chatSendButton.addEventListener('click', () => {
+      const message = chatInput.value.trim();
+      if (!message) return;
+      addMessage('user', message);
+      chatInput.value = '';
+      
+      showLoader();
+      setTimeout(() => {
+        hideLoader();
+        const botResponse = generateBotResponse(message);
+        addMessage('bot', botResponse);
+        addRateButton();
+      }, 2000);
     });
 
     function sendMessage() {
@@ -280,9 +425,10 @@
 
       welcomeScreen.classList.add('hidden');
       chatMessages.classList.remove('hidden');
+      questionBlock.classList.remove('hidden');
 
       addMessage('user', message);
-      
+
       messageInput.value = '';
       messageInput.style.height = 'auto';
 
@@ -294,7 +440,7 @@
         addRateButton();
       }, 2000);
 
-      if (!currentChatId) {
+      if (!currentChatId && isLoggedIn) {
         createNewChat(message);
       }
     }
@@ -302,24 +448,20 @@
     function addMessage(sender, text) {
       const messageDiv = document.createElement('div');
       messageDiv.className = `chat-message flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-      
       const messageContent = document.createElement('div');
       messageContent.className = `max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-        sender === 'user' 
-          ? 'bg-[#8f6451] text-white' 
-          : 'bg-white border border-[#b9a892] text-[#35221b]'
+        sender === 'user' ? 'bg-gray-600 text-white' : 'bg-white border border-gray-300 text-gray-800'
       }`;
       messageContent.textContent = text;
-      
       messageDiv.appendChild(messageContent);
       chatMessages.appendChild(messageDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     function addRateButton() {
-      const existingRateButton = document.querySelector('#rateAnswerBtn');
+      const existingRateButton = document.querySelector('[id^="rateAnswerBtn"]');
       if (existingRateButton) {
-        existingRateButton.removeEventListener('click', showRatingBlock);
+        existingRateButton.remove();
       }
 
       const rateDiv = document.createElement('div');
@@ -344,9 +486,9 @@
       loaderDiv.id = 'loader';
       loaderDiv.className = 'chat-message flex justify-start';
       loaderDiv.innerHTML = `
-        <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-[#b9a892] flex items-center gap-2">
+        <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2">
           <div class="loader"></div>
-          <span class="text-[#35221b]">Генерируется ответ...</span>
+          <span class="text-gray-700">Генерируется ответ...</span>
         </div>
       `;
       chatMessages.appendChild(loaderDiv);
@@ -360,7 +502,7 @@
 
     function generateBotResponse(question) {
       const responses = [
-        'Для этого потребуется предоставить необходимые документы лично в НАО «Государственная корпорация «Правительство для граждан» или территориальное подразделение МВД РК. Услуга доступна как в обычном, так и в ускоренном порядке, в зависимости от ситуации. '
+        'Для этого потребуется предоставить необходимые документы лично в НАО «Государственная корпорация «Правительство для граждан» или территориальное подразделение МВД РК. Услуга доступна как в обычном, так и в ускоренном порядке, в зависимости от ситуации.'
       ];
       return responses[Math.floor(Math.random() * responses.length)];
     }
@@ -417,7 +559,6 @@
       const isValid = Math.random() > 0.3; 
       showValidationResult(isValid);
       hideRatingBlock();
-      questionBlock.classList.remove('hidden');
     });
 
     function showValidationResult(isValid) {
@@ -426,8 +567,7 @@
       
       if (isValid) {
         resultDiv.innerHTML = `
-          <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-[#b9a892] flex items-center gap-2 text-green-600">
-            <span class="text-2xl">🟢</span>
+          <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2 text-green-700">
             <span class="font-medium">Принято (валидация пройдена)</span>
           </div>
         `;
@@ -441,12 +581,9 @@
         const reason = reasons[Math.floor(Math.random() * reasons.length)];
         
         resultDiv.innerHTML = `
-          <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-[#b9a892] text-red-600">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-2xl">🔴</span>
-              <span class="font-medium">Отклонено (валидация не пройдена)</span>
-            </div>
-            <div class="text-sm ml-8">${reason}</div>
+          <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-300 text-red-700">
+            <div class="font-medium mb-1">Отклонено (валидация не пройдена)</div>
+            <div class="text-sm">${reason}</div>
           </div>
         `;
       }
@@ -460,6 +597,8 @@
     }
 
     function createNewChat(firstMessage) {
+      if (!isLoggedIn) return;
+      
       const chatId = Date.now().toString();
       const chat = {
         id: chatId,
@@ -480,11 +619,10 @@
       chatMessages.innerHTML = '';
       chatMessages.classList.add('hidden');
       welcomeScreen.classList.remove('hidden');
-      questionBlock.classList.remove('hidden');
-      ratingBlock.classList.add('hidden');
-      modalOverlay.classList.add('hidden');
+      questionBlock.classList.add('hidden');
       
       messageInput.value = '';
+      chatInput.value = '';
       document.getElementById('commentInput').value = '';
       currentRating = 0;
       updateStars();
@@ -492,23 +630,24 @@
       closeSidebar();
     }
 
-    function saveChats() {
-      localStorage.setItem('sarraChats', JSON.stringify(chats));
-    }
-
     function updateChatHistory() {
+      if (!isLoggedIn) {
+        chatHistory.innerHTML = '';
+        return;
+      }
+      
       chatHistory.innerHTML = '';
       
       chats.forEach(chat => {
         const chatItem = document.createElement('div');
-        chatItem.className = 'chat-item p-3 hover:bg-[rgba(143,100,81,0.1)] rounded-lg cursor-pointer transition-colors relative group';
+        chatItem.className = 'chat-item p-3 hover:bg-gray-800 rounded-lg cursor-pointer transition-colors relative group';
         chatItem.innerHTML = `
           <div class="flex justify-between items-start">
             <div class="flex-1 min-w-0" onclick="loadChat('${chat.id}')">
-              <div class="font-medium text-sm text-[#35221b] mb-1 truncate">${chat.title}</div>
-              <div class="text-xs text-[#8f6451]">${new Date(chat.createdAt).toLocaleDateString()}</div>
+              <div class="font-medium text-sm text-gray-200 mb-1 truncate">${chat.title}</div>
+              <div class="text-xs text-gray-400">${new Date(chat.createdAt).toLocaleDateString()}</div>
             </div>
-            <button class="delete-btn ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors" 
+            <button class="delete-btn ml-2 p-1 text-red-400 hover:text-red-300 hover:bg-red-900 hover:bg-opacity-30 rounded transition-colors" 
                     onclick="deleteChat('${chat.id}', event)" title="Удалить чат">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -559,7 +698,6 @@
           updateChatHistory();
         }, 300);
       } else {
-
         chats = chats.filter(c => c.id !== chatId);
         saveChats();
         
@@ -571,8 +709,13 @@
       }
     }
 
-    sendButton.addEventListener('click', sendMessage);
+    openSidebarBtn.addEventListener('click', openSidebar);
+    closeSidebarBtn.addEventListener('click', closeSidebar);
     newChatBtn.addEventListener('click', startNewChat);
+    headerLoginBtn.addEventListener('click', redirectToAuth);
+    sidebarLoginBtn.addEventListener('click', redirectToAuth);
+    headerLogoutBtn.addEventListener('click', logout);
+    logoutBtn.addEventListener('click', logout);
 
     searchInput.addEventListener('input', function(e) {
       const searchTerm = e.target.value.toLowerCase();
@@ -594,7 +737,7 @@
     window.loadChat = loadChat;
     window.deleteChat = deleteChat;
 
-    updateChatHistory();
+    checkAuthStatus();
   </script>
 </body>
 </html>
