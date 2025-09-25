@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - SARRA</title>
+    <title data-i18n="about">About</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .about-content {
@@ -74,20 +74,26 @@
     
     <div class="container">
         <header class="hero">
-            <h1 class="name">SARRA</h1>
-            <p class="tagline">Feedback-Driven LLM Adaptation</p>
+            <h1 class="name" data-i18n="title">SARRA</h1>
+            <p class="tagline" data-i18n="tagline">Feedback-Driven LLM Adaptation</p>
         </header>
         
         <main class="about-content">
-            <p class="about-text">
+            <p class="about-text" data-i18n="about_text">
                 We propose a feedback-driven improvement loop for retrieval-augmented generation (RAG)-based chatbots. This framework enables the chatbot to learn and evolve by integrating real-time user corrections and feedback. By incorporating user input, the chatbot can enhance its accuracy and relevance, leading to better understanding of user intent and improved interactions over time.
             </p>
         </main>
         <div style="text-align: center; margin-top: 2rem;">
-            <button onclick="window.location='index.html'" class="back-btn" style="position: relative; z-index: 99999; pointer-events: auto;">← Back to Home</button>
+            <button onclick="window.location='index.html'" class="back-btn" style="position: relative; z-index: 99999; pointer-events: auto;" data-i18n="back_to_home">← Back to Home</button>
         </div>
     </div>
     
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            i18n.init();
+        });
+    </script>
 </body>
 </html>
