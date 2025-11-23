@@ -74,6 +74,47 @@
     .send-btn-subtle:hover {
       background: #6b7280;
     }
+    .star {
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .star:hover {
+      color: #f7bc0d;
+    }
+    .star.active {
+      color: #f7bc0d;
+    }
+    .rate-button {
+      background-color: rgba(75, 85, 99, 0.1); 
+      color: #374151; 
+      font-size: 0.875rem;
+    }
+    .rate-button:hover {
+      background-color: rgba(75, 85, 99, 0.2);
+    }
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 50;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 40;
+    }
   </style>
 </head>
 <body class="bg-white font-sans">
@@ -147,7 +188,7 @@
             <div class="flex justify-between items-center">
               <div id="caseTagInside" class="case-tag case-tag-inside">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 <span>Human Resources</span>
                 <button onclick="window.location.href='chat.html'" class="ml-1 hover:bg-blue-200 rounded-full p-0.5 transition-colors">
@@ -159,7 +200,7 @@
               
               <button id="sendButton" 
                 class="send-btn-subtle flex items-center justify-center w-8 h-8 text-white rounded-full transition-colors text-sm">
-                ⭡
+                ➤
               </button>
             </div>
           </div>
@@ -196,7 +237,7 @@
             <div class="flex justify-between items-center">
               <div id="caseTagChat" class="case-tag case-tag-inside">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 <span>Human Resources</span>
                 <button onclick="window.location.href='chat.html'" class="ml-1 hover:bg-blue-200 rounded-full p-0.5 transition-colors">
@@ -208,16 +249,55 @@
               
               <button id="chatSendButton" 
                 class="send-btn-subtle flex items-center justify-center w-8 h-8 text-white rounded-full transition-colors text-sm disabled:bg-gray-400">
-                ⭡
+                ➤
               </button>
             </div>
           </div>
         </div>
       </div>
+
+      <div id="ratingBlock" class="modal hidden p-6 bg-white rounded-lg shadow-lg">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="text-lg font-semibold text-gray-800">Rate the answer</h4>
+          <button id="closeRatingModal" class="p-2 hover:bg-gray-200 rounded">
+            <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Rating:</label>
+          <div class="flex gap-1" id="starRating">
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="1">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="2">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="3">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="4">★</span>
+            <span class="star text-2xl text-gray-300 cursor-pointer" data-rating="5">★</span>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Your feedback</label>
+          <textarea 
+            id="commentInput" 
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            rows="3"
+          ></textarea>
+        </div>
+
+        <button id="submitFeedback" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+          Submit
+        </button>
+      </div>
+
+      <div id="modalOverlay" class="modal-overlay hidden"></div>
     </div>
   </div>
 
   <script>
+    let currentRating = 0;
+
     const sidebar = document.getElementById('sidebar');
     const openSidebarBtn = document.getElementById('openSidebar');
     const closeSidebarBtn = document.getElementById('closeSidebar');
@@ -229,6 +309,9 @@
     const chatMessages = document.getElementById('chatMessages');
     const questionBlock = document.getElementById('questionBlock');
     const newChatBtn = document.getElementById('newChatBtn');
+    const ratingBlock = document.getElementById('ratingBlock');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeRatingModal = document.getElementById('closeRatingModal');
 
     function openSidebar() {
       sidebar.classList.remove('-translate-x-full');
@@ -267,13 +350,15 @@
       const message = chatInput.value.trim();
       if (!message) return;
       addMessage('user', message);
+      const userQuestion = message;
       chatInput.value = '';
       
       showLoader();
       setTimeout(() => {
         hideLoader();
-        const botResponse = getDemoResponse();
+        const botResponse = getDemoResponse(userQuestion);
         addMessage('bot', botResponse);
+        addRateButton();
       }, 1500);
     });
 
@@ -286,13 +371,15 @@
       questionBlock.classList.remove('hidden');
 
       addMessage('user', message);
+      const userQuestion = message;
       messageInput.value = '';
 
       showLoader();
       setTimeout(() => {
         hideLoader();
-        const botResponse = getDemoResponse();
+        const botResponse = getDemoResponse(userQuestion);
         addMessage('bot', botResponse);
+        addRateButton();
       }, 1500);
     }
 
@@ -307,6 +394,29 @@
       messageDiv.appendChild(messageContent);
       chatMessages.appendChild(messageDiv);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function addRateButton() {
+      const existingRateButton = document.querySelector('[id^="rateAnswerBtn"]');
+      if (existingRateButton) {
+        existingRateButton.remove();
+      }
+
+      const rateDiv = document.createElement('div');
+      rateDiv.className = 'chat-message flex justify-start mt-2';
+      const uniqueId = `rateAnswerBtn-${Date.now()}`; 
+      rateDiv.innerHTML = `
+        <button id="${uniqueId}" class="flex items-center gap-2 px-3 py-1 rate-button rounded-lg transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+          </svg>
+          <span>Rate the answer</span>
+        </button>
+      `;
+      chatMessages.appendChild(rateDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      document.getElementById(uniqueId).addEventListener('click', showRatingBlock);
     }
 
     function showLoader() {
@@ -328,14 +438,150 @@
       if (loader) loader.remove();
     }
 
-    function getDemoResponse() {
-      return `To apply for paid leave, start by logging into your company portal 
+    function getDemoResponse(question) {
+      const responses = {
+        'leave': `To apply for paid leave, start by logging into your company portal 
     and going to the "Leave" or "Time Off" section. 
 
-    Select the type of leave you wish to apply for, choose the start and end dates, 
-    and provide any required details or notes for your manager. 
+    Select the type of leave you wish to apply for (vacation, sick leave, personal day), 
+    choose the start and end dates, and provide any required details or notes for your manager. 
 
-    Once submitted, your request will be sent for approval.`;
+    Once submitted, your request will be sent for approval. You'll receive a notification 
+    once your manager reviews and approves or denies the request. Make sure to submit 
+    your leave request well in advance when possible.`,
+        
+        'handbook': `The employee handbook can typically be found in your company's HR portal 
+    or intranet under "Resources" or "Employee Documents" section. 
+
+    You can also request a digital or physical copy from your HR department. 
+
+    The handbook contains important information about company policies, benefits, 
+    code of conduct, and workplace procedures. Make sure to review it thoroughly, 
+    especially during onboarding.`,
+        
+        'update': `To update your personal information, log into the company HR portal 
+    and navigate to your employee profile or "My Information" section. 
+
+    You can update details such as your address, phone number, emergency contacts, 
+    and banking information for direct deposit. 
+
+    Some changes may require HR approval or verification. If you encounter any issues 
+    or need to update sensitive information like your legal name, contact HR directly.`,
+        
+        'insurance': `To enroll in the company health insurance plan, access the benefits 
+    section of your HR portal during the open enrollment period or within 30 days 
+    of your start date (for new hires). 
+
+    Review the available plans, compare coverage options and costs, and select the plan 
+    that best fits your needs. You may also need to add dependents if applicable. 
+
+    After enrollment, you'll receive confirmation and details about when your coverage begins. 
+    For questions about specific plans, contact the HR benefits team.`
+      };
+
+      const lowerQuestion = question.toLowerCase();
+      
+      if (lowerQuestion.includes('leave') || lowerQuestion.includes('paid') || lowerQuestion.includes('apply')) {
+        return responses.leave;
+      } else if (lowerQuestion.includes('handbook') || lowerQuestion.includes('employee')) {
+        return responses.handbook;
+      } else if (lowerQuestion.includes('update') || lowerQuestion.includes('information') || lowerQuestion.includes('personal')) {
+        return responses.update;
+      } else if (lowerQuestion.includes('insurance') || lowerQuestion.includes('enroll') || lowerQuestion.includes('health')) {
+        return responses.insurance;
+      }
+      
+      return `Thank you for your HR-related question. Our Human Resources team can assist you 
+    with benefits, leave requests, policies, and employee information. Please provide more details.`;
+    }
+
+    function showRatingBlock() {
+      ratingBlock.classList.remove('hidden');
+      modalOverlay.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function hideRatingBlock() {
+      ratingBlock.classList.add('hidden');
+      modalOverlay.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+      document.getElementById('commentInput').value = '';
+      currentRating = 0;
+      updateStars();
+    }
+
+    document.getElementById('starRating').addEventListener('click', function(e) {
+      if (e.target.classList.contains('star')) {
+        currentRating = parseInt(e.target.dataset.rating);
+        updateStars();
+      }
+    });
+
+    function updateStars() {
+      const stars = document.querySelectorAll('.star');
+      stars.forEach((star, index) => {
+        if (index < currentRating) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+    }
+
+    closeRatingModal.addEventListener('click', hideRatingBlock);
+    modalOverlay.addEventListener('click', hideRatingBlock);
+
+    document.getElementById('submitFeedback').addEventListener('click', function() {
+      const comment = document.getElementById('commentInput').value.trim();
+      
+      if (!comment) {
+        alert('Please leave a review');
+        return;
+      }
+
+      if (currentRating === 0) {
+        alert('Please provide a rating');
+        return;
+      }
+
+      const isValid = Math.random() > 0.3; 
+      showValidationResult(isValid);
+      hideRatingBlock();
+    });
+
+    function showValidationResult(isValid) {
+      const resultDiv = document.createElement('div');
+      resultDiv.className = 'chat-message flex justify-start mt-2';
+      
+      if (isValid) {
+        resultDiv.innerHTML = `
+          <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2 text-green-700">
+            <span class="font-medium">Accepted (validation passed)</span>
+          </div>
+        `;
+      } else {
+        const reasons = [
+          'Feedback contains inappropriate language',
+          'Review is too short',
+          'Spam content detected',
+          'More detailed feedback is required'
+        ];
+        const reason = reasons[Math.floor(Math.random() * reasons.length)];
+        
+        resultDiv.innerHTML = `
+          <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 text-red-700">
+            <div class="font-medium mb-1">Rejected (validation failed)</div>
+            <div class="text-sm">${reason}</div>
+          </div>
+        `;
+      }
+
+      chatMessages.appendChild(resultDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      setTimeout(() => {
+        resultDiv.remove();
+      }, 3000);
     }
 
     function startNewChat() {
@@ -345,6 +591,9 @@
       questionBlock.classList.add('hidden');
       messageInput.value = '';
       chatInput.value = '';
+      document.getElementById('commentInput').value = '';
+      currentRating = 0;
+      updateStars();
       closeSidebar();
     }
 
