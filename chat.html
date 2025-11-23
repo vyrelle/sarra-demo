@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,278 +108,7 @@
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
           </svg>
-          <span>Rate the answer</span>
-        </button>
-      `;
-      chatMessages.appendChild(rateDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      document.getElementById(uniqueId).addEventListener('click', showRatingBlock);
-    }
-
-    function showLoader() {
-      const loaderDiv = document.createElement('div');
-      loaderDiv.id = 'loader';
-      loaderDiv.className = 'chat-message flex justify-start';
-      loaderDiv.innerHTML = `
-        <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2">
-          <div class="loader"></div>
-          <span class="text-gray-700">Generating response...</span>
-        </div>
-      `;
-      chatMessages.appendChild(loaderDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function hideLoader() {
-      const loader = document.getElementById('loader');
-      if (loader) loader.remove();
-    }
-
-    function generateBotResponse(question) {
-      const responses = [
-        'You can easily track your Amazon order by logging into your account and going to the "Your Orders" section. Once there, find the specific order you want to track and click on "Track Package." This will show you the current location of your package, the shipping status, and the estimated delivery date. If you notice any delays or issues, Amazon also provides options to contact customer support directly or request updates via email or app notifications.'
-      ];
-      return responses[Math.floor(Math.random() * responses.length)];
-    }
-
-    function showRatingBlock() {
-      ratingBlock.classList.remove('hidden');
-      modalOverlay.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-    }
-
-    function hideRatingBlock() {
-      ratingBlock.classList.add('hidden');
-      modalOverlay.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-      document.getElementById('commentInput').value = '';
-      currentRating = 0;
-      updateStars();
-    }
-
-    document.getElementById('starRating').addEventListener('click', function(e) {
-      if (e.target.classList.contains('star')) {
-        currentRating = parseInt(e.target.dataset.rating);
-        updateStars();
-      }
-    });
-
-    function updateStars() {
-      const stars = document.querySelectorAll('.star');
-      stars.forEach((star, index) => {
-        if (index < currentRating) {
-          star.classList.add('active');
-        } else {
-          star.classList.remove('active');
-        }
-      });
-    }
-
-    closeRatingModal.addEventListener('click', hideRatingBlock);
-    modalOverlay.addEventListener('click', hideRatingBlock);
-
-    document.getElementById('submitFeedback').addEventListener('click', function() {
-      const comment = document.getElementById('commentInput').value.trim();
-      
-      if (!comment) {
-        alert('Please leave a review');
-        return;
-      }
-
-      if (currentRating === 0) {
-        alert('Please provide a rating');
-        return;
-      }
-
-      const isValid = Math.random() > 0.3; 
-      showValidationResult(isValid);
-      hideRatingBlock();
-    });
-
-    function showValidationResult(isValid) {
-      const resultDiv = document.createElement('div');
-      resultDiv.className = 'chat-message flex justify-start mt-2';
-      
-      if (isValid) {
-        resultDiv.innerHTML = `
-          <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2 text-green-700">
-            <span class="font-medium">Accepted (validation passed)</span>
-          </div>
-        `;
-      } else {
-        const reasons = [
-          'Feedback contains inappropriate language',
-          'Review is too short',
-          'Spam content detected',
-          'More detailed feedback is required'
-        ];
-        const reason = reasons[Math.floor(Math.random() * reasons.length)];
-        
-        resultDiv.innerHTML = `
-          <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 text-red-700">
-            <div class="font-medium mb-1">Rejected (validation failed)</div>
-            <div class="text-sm">${reason}</div>
-          </div>
-        `;
-      }
-
-      chatMessages.appendChild(resultDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      setTimeout(() => {
-        resultDiv.remove();
-      }, 3000);
-    }
-
-    function createNewChat(firstMessage) {
-      if (!isLoggedIn) return;
-      
-      const chatId = Date.now().toString();
-      const chat = {
-        id: chatId,
-        title: firstMessage.substring(0, 30) + (firstMessage.length > 30 ? '...' : ''),
-        messages: [],
-        createdAt: new Date().toISOString()
-      };
-      
-      chats.unshift(chat);
-      currentChatId = chatId;
-      saveChats();
-      updateChatHistory();
-    }
-
-    function startNewChat() {
-      currentChatId = null;
-      
-      chatMessages.innerHTML = '';
-      chatMessages.classList.add('hidden');
-      welcomeScreen.classList.remove('hidden');
-      questionBlock.classList.add('hidden');
-      
-      messageInput.value = '';
-      chatInput.value = '';
-      document.getElementById('commentInput').value = '';
-      currentRating = 0;
-      updateStars();
-      
-      closeSidebar();
-    }
-
-    function updateChatHistory() {
-      if (!isLoggedIn) {
-        chatHistory.innerHTML = '';
-        return;
-      }
-      
-      chatHistory.innerHTML = '';
-      
-      chats.forEach(chat => {
-        const chatItem = document.createElement('div');
-        chatItem.className = 'chat-item p-3 hover:bg-gray-800 rounded-lg cursor-pointer transition-colors relative group';
-        chatItem.innerHTML = `
-          <div class="flex justify-between items-start">
-            <div class="flex-1 min-w-0" onclick="loadChat('${chat.id}')">
-              <div class="font-medium text-sm text-gray-200 mb-1 truncate">${chat.title}</div>
-              <div class="text-xs text-gray-400">${new Date(chat.createdAt).toLocaleDateString()}</div>
-            </div>
-            <button class="delete-btn ml-2 p-1 text-red-400 hover:text-red-300 hover:bg-red-900 hover:bg-opacity-30 rounded transition-colors" 
-                    onclick="deleteChat('${chat.id}', event)" title="Delete chat">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-              </svg>
-            </button>
-          </div>
-        `;
-        
-        chatHistory.appendChild(chatItem);
-      });
-    }
-
-    function loadChat(chatId) {
-      console.log('Chat loaded:', chatId);
-      closeSidebar();
-    }
-
-    function deleteChat(chatId, event) {
-      event.stopPropagation(); 
-      
-      const chat = chats.find(c => c.id === chatId);
-      if (!chat) return;
-
-      const isConfirmed = confirm(`Are you sure you want to delete the chat "${chat.title}"?`);
-      if (!isConfirmed) return;
-
-      const chatElements = document.querySelectorAll('.chat-item');
-      let chatElement = null;
-      
-      chatElements.forEach(element => {
-        const deleteBtn = element.querySelector('.delete-btn');
-        if (deleteBtn && deleteBtn.getAttribute('onclick').includes(chatId)) {
-          chatElement = element;
-        }
-      });
-
-      if (chatElement) {
-        chatElement.classList.add('deleting');
-        
-        setTimeout(() => {
-          chats = chats.filter(c => c.id !== chatId);
-          saveChats();
-          
-          if (currentChatId === chatId) {
-            startNewChat();
-          }
-          
-          updateChatHistory();
-        }, 300);
-      } else {
-        chats = chats.filter(c => c.id !== chatId);
-        saveChats();
-        
-        if (currentChatId === chatId) {
-          startNewChat();
-        }
-        
-        updateChatHistory();
-      }
-    }
-
-    openSidebarBtn.addEventListener('click', openSidebar);
-    closeSidebarBtn.addEventListener('click', closeSidebar);
-    newChatBtn.addEventListener('click', startNewChat);
-    headerLoginBtn.addEventListener('click', redirectToAuth);
-    sidebarLoginBtn.addEventListener('click', redirectToAuth);
-    headerLogoutBtn.addEventListener('click', logout);
-    logoutBtn.addEventListener('click', logout);
-
-    searchInput.addEventListener('input', function(e) {
-      const searchTerm = e.target.value.toLowerCase();
-      const chatItems = chatHistory.children;
-      
-      Array.from(chatItems).forEach(item => {
-        const titleElement = item.querySelector('.font-medium');
-        if (titleElement) {
-          const title = titleElement.textContent.toLowerCase();
-          if (title.includes(searchTerm)) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        }
-      });
-    });
-
-    window.loadChat = loadChat;
-    window.deleteChat = deleteChat;
-    window.navigateToCase = function(url) {
-      window.location.href = url;
-    };
-
-    checkAuthStatus();
-  </script>
-</body>
-</html>New Chat</span>
+          <span>New Chat</span>
         </button>
       </div>
       
@@ -449,7 +177,7 @@
         <span class="text-sm text-gray-600" id="headerUserEmail">user@email.com</span>
         <button id="headerLogoutBtn" class="text-gray-600 hover:text-gray-800 transition-colors" title="Log Out">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013 3v1"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
           </svg>
         </button>
       </div>
@@ -469,14 +197,14 @@
             <textarea 
               id="messageInput" 
               placeholder="Ask a question..." 
-              class="w-full border border-gray-400 rounded-full py-3 px-4 pr-12 shadow-lg 
+              class="w-full border border-gray-400 rounded-full py-3 px-4 pr-14 shadow-lg 
                     focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none 
                     transition-all bg-white group-hover:shadow-xl group-hover:border-gray-400 group-hover:bg-gray-50"
               rows="1"
             ></textarea>
 
             <button id="sendButton" 
-              class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 bg-gray-700 text-white rounded-full hover:bg-gray-800 transition-colors shadow-md">
+              class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 bg-gray-700 text-white rounded-full hover:bg-gray-800 transition-colors shadow-md">
               ⭡
             </button>
           </div>
@@ -540,18 +268,19 @@
       </div>
 
       <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4 hidden max-w-2xl mx-auto w-full"></div>
+      
       <div id="questionBlock" class="p-4 bg-white pb-8 hidden">
         <div class="max-w-2xl mx-auto w-full">
           <div class="relative w-full">
             <textarea 
               id="chatInput" 
               placeholder="Ask a question..." 
-              class="w-full border rounded-full py-3 px-4 pr-12 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              class="w-full border rounded-full py-3 px-4 pr-14 shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               rows="1"
             ></textarea>
 
             <button id="chatSendButton" 
-              class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center justify-center w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors disabled:bg-gray-400">
+              class="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center w-9 h-9 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors disabled:bg-gray-400">
               ⭡
             </button>
           </div>
@@ -816,7 +545,7 @@
       loaderDiv.id = 'loader';
       loaderDiv.className = 'chat-message flex justify-start';
       loaderDiv.innerHTML = `
-        <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2">
+        <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2">
           <div class="loader"></div>
           <span class="text-gray-700">Generating response...</span>
         </div>
@@ -897,7 +626,7 @@
       
       if (isValid) {
         resultDiv.innerHTML = `
-          <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2 text-green-700">
+          <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 flex items-center gap-2 text-green-700">
             <span class="font-medium">Accepted (validation passed)</span>
           </div>
         `;
@@ -911,7 +640,7 @@
         const reason = reasons[Math.floor(Math.random() * reasons.length)];
         
         resultDiv.innerHTML = `
-          <div class="max-w-xs lg:max-w-md px-4 py-2 rounded-lg bg-white border border-gray-300 text-red-700">
+          <div class="max-w-full px-4 py-2 rounded-lg bg-white border border-gray-300 text-red-700">
             <div class="font-medium mb-1">Rejected (validation failed)</div>
             <div class="text-sm">${reason}</div>
           </div>
