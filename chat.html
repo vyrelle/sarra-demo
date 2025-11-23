@@ -561,8 +561,17 @@
 
     function generateBotResponse(question) {
       const responses = [
-        'You can easily track your Amazon order by logging into your account and going to the "Your Orders" section. Once there, find the specific order you want to track and click on "Track Package." This will show you the current location of your package, the shipping status, and the estimated delivery date. If you notice any delays or issues, Amazon also provides options to contact customer support directly or request updates via email or app notifications.'
-      ];
+  "Hello! How can I assist you today? I'm here to help with any questions you have.",
+  "Hi there! What would you like to explore today? Feel free to ask anything.",
+  "Welcome! How can I support you? Let me know what you need.",
+  "Hello! I'm ready to help you. Just tell me what you're looking for.",
+  "Hi! What would you like to know? I'm here to make things easier.",
+  "Greetings! How can I be of service? Ask your question anytime.",
+  "Hello! Let me know what you're curious about. I'm here to assist.",
+  "Hi! How may I help you today? I'm ready when you are.",
+  "Welcome back! What can I do for you today? I'm here to guide you.",
+  "Hey! How can I support your request? Feel free to ask your question."
+];
       return responses[Math.floor(Math.random() * responses.length)];
     }
 
